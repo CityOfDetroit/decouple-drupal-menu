@@ -1,11 +1,11 @@
 {
-  "name": "Multi Level Menu",
+  "name": "Decouple Drupal Menu",
   "version": "1.0.0",
-  "description": "Simple multi level menu library",
+  "description": "Simple decouple menu that uses drupal api to populate content.",
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jedgar1mx/multi-lvl-menu.git"
+    "url": "https://github.com/CityOfDetroit/decouple-drupal-menu.git"
   },
   "scripts": {
     "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
