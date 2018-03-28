@@ -1,5 +1,5 @@
 {
-  "name": "Decouple Drupal Menu",
+  "name": "decouple-drupal-menu",
   "version": "1.0.0",
   "description": "Simple decouple menu that uses drupal api to populate content.",
   "main": "main.js",
