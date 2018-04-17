@@ -16,7 +16,7 @@ export default class Controller {
   }
   getTaxomy(controller){
     let departments = new Promise((resolve, reject) => {
-      let url = "http://detroitmi.theneighborhoods.org/rest/menu/department?_format=hal_json";
+      let url = "http://detroitmi.theneighborhoods.org/rest/menu/department-full?_format=hal_json";
       return fetch(url,{mode: 'cors'})
       .then((resp) => resp.json()) // Transform the data into json
       .then(function(data) {
@@ -36,7 +36,6 @@ export default class Controller {
       return fetch(url)
       .then((resp) => resp.json()) // Transform the data into json
       .then(function(data) {
-        console.log(data);
         resolve({name: 'HOW DO I', data: data});
       });
     });
