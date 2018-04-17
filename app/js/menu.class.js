@@ -41,8 +41,8 @@ export default class Menu {
     });
     let cleanMenuSection = {};
     for (let lvl in spliceMenu) {
-      console.log(lvl);
-      console.log(spliceMenu[lvl]);
+      // console.log(lvl);
+      // console.log(spliceMenu[lvl]);
       if (spliceMenu.hasOwnProperty(lvl) && spliceMenu[lvl].length) {
         switch (lvl) {
           case 'lvl1':
@@ -53,14 +53,13 @@ export default class Menu {
             });
             break;
           case 'lvl2':
-            console.log(cleanMenuSection);
             spliceMenu[lvl].forEach(function(item){
               let tempIndex = item.data._links.self.href.split('/');
               let tempIndex1 = tempIndex[tempIndex.length - 2];
               let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              console.log(item);
-              console.log(tempIndex1);
-              console.log(tempIndexLast);
+              // console.log(item);
+              // console.log(tempIndex1);
+              // console.log(tempIndexLast);
               cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data._links.self.href.split('?')[0], name: item.data.name[0].value, children: {}};
             });
             break;
@@ -70,10 +69,10 @@ export default class Menu {
               let tempIndex1 = tempIndex[tempIndex.length - 3];
               let tempIndex2 = tempIndex[tempIndex.length - 2];
               let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              console.log(item);
-              console.log(tempIndex1);
-              console.log(tempIndex2);
-              console.log(tempIndexLast);
+              // console.log(item);
+              // console.log(tempIndex1);
+              // console.log(tempIndex2);
+              // console.log(tempIndexLast);
               cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data._links.self.href.split('?')[0], name: item.data.name[0].value, children: {}};
             });
             break;
@@ -84,11 +83,11 @@ export default class Menu {
               let tempIndex2 = tempIndex[tempIndex.length - 3];
               let tempIndex3 = tempIndex[tempIndex.length - 2];
               let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              console.log(item);
-              console.log(tempIndex1);
-              console.log(tempIndex2);
-              console.log(tempIndex3);
-              console.log(tempIndexLast);
+              // console.log(item);
+              // console.log(tempIndex1);
+              // console.log(tempIndex2);
+              // console.log(tempIndex3);
+              // console.log(tempIndexLast);
               cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data._links.self.href.split('?')[0], name: item.data.name[0].value, children: {}};
             });
             break;
@@ -115,39 +114,39 @@ export default class Menu {
             < BACK
           </div>`;
         let multiMenu = controller.menu.buildMenuLvls(taxSet, controller);
-        controller.menu.markup = `${multiMenu.map(lvl1 =>
-          `<div class="nav-item lvl-2">
-            <a href="${lvl1.link}"><span>${lvl1.name}</span></a>
-            ${Object.keys(lvl1.children).length !== 0 && lvl1.children.constructor === Object ? `<div class="sub-items-btn"></div>
-            <article class="nav-container lvl-3">
-              <div class="nav-item back lvl-3">
-                < BACK
-              </div>
-            </article>` : ''}
-
-           </div>`
-        ).join('')}
-        `;
-        // taxSet.data.forEach(function(item) {
-        //   let alias = item._links.self.href.split('/');
-        //   console.log(alias);
-        //   let cleanAlias = '';
-        //   alias.forEach(function(str, index) {
-        //     if (index > 2) {
-        //       if (index == alias.length - 1) {
-        //         let tempStr = str.split('?');
-        //         cleanAlias += tempStr[0];
-        //       } else {
-        //         cleanAlias += str + '/';
-        //       }
-        //     }
-        //   });
-        //   console.log(cleanAlias);
-        //   controller.menu.markup += `<div class="nav-item lvl-2">
-        //     <a href="${protocol}//${baseURL}/${cleanAlias}" target="_blank"><span>${item.name[0].value}</span></a>
-        //   </div>`;
-        // });
-        // controller.menu.markup += `</div>`;
+        for (var link in multiMenu) {
+          if (multiMenu.hasOwnProperty(link)) {
+            controller.menu.markup +=
+            `<div class="nav-item lvl-2">
+              <a href="${multiMenu[link].link}"><span>${multiMenu[link].name}</span></a>`;
+              if(Object.keys(multiMenu[link].children).length !== 0 && multiMenu[link].children.constructor === Object){
+                controller.menu.markup += `<div class="sub-items-btn"></div>
+                <article class="nav-container lvl-3">
+                  <div class="nav-item back lvl-3">
+                    < BACK
+                  </div>`;
+                for (var linkChild in multiMenu[link].children) {
+                  if (multiMenu[link].children.hasOwnProperty(linkChild)) {
+                    controller.menu.markup +=
+                    `<div class="nav-item lvl-3">
+                      <a href="${multiMenu[link].children[linkChild].link}"><span>${multiMenu[link].children[linkChild].name}</span></a>`;
+                      if(Object.keys(multiMenu[link].children[linkChild].children).length !== 0 && multiMenu[link].children[linkChild].children.constructor === Object){
+                        controller.menu.markup += `<div class="sub-items-btn"></div>
+                        <article class="nav-container lvl-4">
+                          <div class="nav-item back lvl-4">
+                            < BACK
+                          </div>
+                        </article>`;
+                      }
+                      controller.menu.markup +=`</div>`;
+                  }
+                }
+                controller.menu.markup += `</article>`;
+              }
+             controller.menu.markup += `</div>`;
+          }
+        }
+        controller.menu.markup += `</div>`;
       });
       controller.menu.markup += `</article>`;
     }
