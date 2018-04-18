@@ -36,7 +36,7 @@ main {position: relative; width: 100%;}
 h1,h2,h3,h4,h5{font-weight: bold; margin: 0;}
 img{width: 100%;}
 // ====================== mobile ============================
-.menu {
+.big-menu {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -78,10 +78,10 @@ img{width: 100%;}
 	}
 }
 
-#menu {
+#big-menu {
 	display: none;
 
-	&:checked ~ .menu {
+	&:checked ~ .big-menu {
 		background-color: $color-3;
     color: $color-1;
 		// transform: rotate(360deg);
@@ -105,7 +105,7 @@ img{width: 100%;}
 		}
 	}
 
-	&:checked ~ .nav {
+	&:checked ~ .big-nav {
 		right: 0;
 		transition: right $base-duration ease;
 	}
@@ -121,7 +121,7 @@ img{width: 100%;}
 	// }
 }
 
-.nav {
+.big-nav {
 	position: fixed;
 	top: 0;
 	right: -30em;

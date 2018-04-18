@@ -236,7 +236,7 @@ export default class Menu {
   }
   render(markup, controller) {
     console.log(markup);
-    document.querySelector('nav').innerHTML = markup;
+    document.querySelector('.big-nav').innerHTML = markup;
     let navItems = Array.from(document.querySelectorAll('.sub-items-btn'));
     navItems.forEach(function(item) {
       item.addEventListener('click', function(e) {

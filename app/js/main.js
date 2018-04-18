@@ -21,7 +21,7 @@ import Controller from './controller.class.js';
     }
   };
   console.log('starting js');
-  document.getElementById('menu').addEventListener('change', function(e){
+  document.getElementById('big-menu').addEventListener('change', function(e){
     menuToggle(e);
   });
 })(window);
