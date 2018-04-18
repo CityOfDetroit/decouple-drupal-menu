@@ -2,9 +2,7 @@
 export default class Menu {
   constructor() {
     this.markup = `<div class="search-box">
-      <span>
-        <img src="img/search.png" alt="search">
-      </span>
+      <span></span>
       <input id="menu-search" type="text" name="" value="" placeholder="SEARCH">
     </div>`;
   }
@@ -17,7 +15,7 @@ export default class Menu {
     };
     list.data.forEach(function(item) {
       let tempItem = null;
-      let splitItem = item._links.self.href.split('/');
+      let splitItem = item.url_alias.split('/');
       switch (true) {
         case splitItem.length == 5:
           tempItem = {parent: 'none', data: item}
@@ -39,6 +37,7 @@ export default class Menu {
 
       }
     });
+    console.log(spliceMenu);
     let cleanMenuSection = {};
     for (let lvl in spliceMenu) {
       // console.log(lvl);
@@ -47,25 +46,25 @@ export default class Menu {
         switch (lvl) {
           case 'lvl1':
             spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data._links.self.href.split('/');
+              let tempIndex = item.data.url_alias.split('/');
               let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              cleanMenuSection[tempIndexLast] = {link: item.data._links.self.href.split('?')[0], name: item.data.name[0].value, children: {}};
+              cleanMenuSection[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
             });
             break;
           case 'lvl2':
             spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data._links.self.href.split('/');
+              let tempIndex = item.data.url_alias.split('/');
               let tempIndex1 = tempIndex[tempIndex.length - 2];
               let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
               // console.log(item);
               // console.log(tempIndex1);
               // console.log(tempIndexLast);
-              cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data._links.self.href.split('?')[0], name: item.data.name[0].value, children: {}};
+              cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
             });
             break;
           case 'lvl3':
             spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data._links.self.href.split('/');
+              let tempIndex = item.data.url_alias.split('/');
               let tempIndex1 = tempIndex[tempIndex.length - 3];
               let tempIndex2 = tempIndex[tempIndex.length - 2];
               let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
@@ -73,12 +72,12 @@ export default class Menu {
               // console.log(tempIndex1);
               // console.log(tempIndex2);
               // console.log(tempIndexLast);
-              cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data._links.self.href.split('?')[0], name: item.data.name[0].value, children: {}};
+              cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
             });
             break;
           case 'lvl4':
             spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data._links.self.href.split('/');
+              let tempIndex = item.data.url_alias.split('/');
               let tempIndex1 = tempIndex[tempIndex.length - 4];
               let tempIndex2 = tempIndex[tempIndex.length - 3];
               let tempIndex3 = tempIndex[tempIndex.length - 2];
@@ -88,7 +87,7 @@ export default class Menu {
               // console.log(tempIndex2);
               // console.log(tempIndex3);
               // console.log(tempIndexLast);
-              cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data._links.self.href.split('?')[0], name: item.data.name[0].value, children: {}};
+              cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
             });
             break;
           default:
@@ -111,7 +110,7 @@ export default class Menu {
         <div class="sub-items-btn"></div>
         <article class="nav-container lvl-2">
           <div class="nav-item back lvl-2">
-            < BACK
+            <i class="fas fa-angle-left"></i> BACK
           </div>`;
         let multiMenu = controller.menu.buildMenuLvls(taxSet, controller);
         for (var link in multiMenu) {
@@ -123,7 +122,7 @@ export default class Menu {
                 controller.menu.markup += `<div class="sub-items-btn"></div>
                 <article class="nav-container lvl-3">
                   <div class="nav-item back lvl-3">
-                    < BACK
+                    <i class="fas fa-angle-left"></i> BACK
                   </div>`;
                 for (var linkChild in multiMenu[link].children) {
                   if (multiMenu[link].children.hasOwnProperty(linkChild)) {
@@ -134,7 +133,7 @@ export default class Menu {
                         controller.menu.markup += `<div class="sub-items-btn"></div>
                         <article class="nav-container lvl-4">
                           <div class="nav-item back lvl-4">
-                            < BACK
+                            <i class="fas fa-angle-left"></i> BACK
                           </div>`;
                         for (var linkgrandChild in multiMenu[link].children[linkChild].children) {
                           if (multiMenu[link].children[linkChild].children.hasOwnProperty(linkgrandChild)) {
@@ -145,7 +144,7 @@ export default class Menu {
                                 controller.menu.markup += `<div class="sub-items-btn"></div>
                                 <article class="nav-container lvl-5">
                                   <div class="nav-item back lvl-5">
-                                    < BACK
+                                    <i class="fas fa-angle-left"></i> BACK
                                   </div>`;
                                 for (var linkgreatGrandChild in multiMenu[link].children[linkChild].children[linkgrandChild].children) {
                                   if (multiMenu[link].children[linkChild].children[linkgrandChild].children.hasOwnProperty(linkgreatGrandChild)) {
@@ -156,7 +155,7 @@ export default class Menu {
                                         controller.menu.markup += `<div class="sub-items-btn"></div>
                                         <article class="nav-container lvl-6">
                                           <div class="nav-item back lvl-6">
-                                            < BACK
+                                            <i class="fas fa-angle-left"></i> BACK
                                           </div>
                                         </article>`;
                                       }
