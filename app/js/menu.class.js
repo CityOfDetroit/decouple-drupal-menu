@@ -135,8 +135,40 @@ export default class Menu {
                         <article class="nav-container lvl-4">
                           <div class="nav-item back lvl-4">
                             < BACK
-                          </div>
-                        </article>`;
+                          </div>`;
+                        for (var linkgrandChild in multiMenu[link].children[linkChild].children) {
+                          if (multiMenu[link].children[linkChild].children.hasOwnProperty(linkgrandChild)) {
+                            controller.menu.markup +=
+                            `<div class="nav-item lvl-4">
+                              <a href="${multiMenu[link].children[linkChild].children[linkgrandChild].link}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].name}</span></a>`;
+                              if(Object.keys(multiMenu[link].children[linkChild].children[linkgrandChild].children).length !== 0 && multiMenu[link].children[linkChild].children[linkgrandChild].children.constructor === Object){
+                                controller.menu.markup += `<div class="sub-items-btn"></div>
+                                <article class="nav-container lvl-5">
+                                  <div class="nav-item back lvl-5">
+                                    < BACK
+                                  </div>`;
+                                for (var linkgreatGrandChild in multiMenu[link].children[linkChild].children[linkgrandChild].children) {
+                                  if (multiMenu[link].children[linkChild].children[linkgrandChild].children.hasOwnProperty(linkgreatGrandChild)) {
+                                    controller.menu.markup +=
+                                    `<div class="nav-item lvl-5">
+                                      <a href="${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].link}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].name}</span></a>`;
+                                      if(Object.keys(multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].children).length !== 0 && multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].children.constructor === Object){
+                                        controller.menu.markup += `<div class="sub-items-btn"></div>
+                                        <article class="nav-container lvl-6">
+                                          <div class="nav-item back lvl-6">
+                                            < BACK
+                                          </div>
+                                        </article>`;
+                                      }
+                                      controller.menu.markup +=`</div>`;
+                                  }
+                                }
+                                controller.menu.markup += `</article>`;
+                              }
+                              controller.menu.markup +=`</div>`;
+                          }
+                        }
+                        controller.menu.markup += `</article>`;
                       }
                       controller.menu.markup +=`</div>`;
                   }
@@ -148,7 +180,26 @@ export default class Menu {
         }
         controller.menu.markup += `</div>`;
       });
-      controller.menu.markup += `</article>`;
+      controller.menu.markup +=
+      `<div class="nav-item lvl-1">
+        <a href="${protocol}//${baseURL}/buses"><span>BUSES</span></a>
+       </div>
+       <div class="nav-item lvl-1">
+         <a href="${protocol}//${baseURL}/jobs"><span>JOBS</span></a>
+       </div>
+       <div class="nav-item lvl-1">
+        <a href="${protocol}//${baseURL}/pay"><span>PAY</span></a>
+       </div>
+       <div class="nav-item lvl-1">
+        <a href="${protocol}//${baseURL}/water"><span>WATER</span></a>
+       </div>
+       <div class="nav-item lvl-1">
+        <a href="${protocol}//${baseURL}/documents"><span>DOCUMENTS</span></a>
+       </div>
+       <div class="nav-item lvl-1">
+         <a href="${protocol}//${baseURL}/forms"><span>FORMS</span></a>
+        </div>
+      </article>`;
     }
     controller.menu.render(controller.menu.markup, controller);
   }
