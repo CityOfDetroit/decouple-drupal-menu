@@ -104,9 +104,12 @@ export default class Menu {
     if (data.length) {
       controller.menu.markup += `<article class="nav-container lvl-1">`;
       data.forEach(function(taxSet) {
+        console.log(taxSet);
         controller.menu.markup +=
         `<div class="nav-item lvl-1">
-        <a href="${protocol}//${baseURL}/${taxSet.name.toLowerCase()}"><span>${taxSet.name}</span></a>
+        ${taxSet.name == 'DEPARTMENTS' ? `<a href="${protocol}//${baseURL}/department"><span>${taxSet.name}</span></a>` : ''}
+        ${taxSet.name == 'GOVERNMENT' ? `<a href="${protocol}//${baseURL}/government"><span>${taxSet.name}</span></a>` : ''}
+        ${taxSet.name == 'HOW DO I' ? `<a href="${protocol}//${baseURL}/how-do-i"><span>${taxSet.name}</span></a>` : ''}
         <div class="sub-items-btn"></div>
         <article class="nav-container lvl-2">
           <div class="nav-item back lvl-2">
