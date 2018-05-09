@@ -37,7 +37,7 @@ export default class Menu {
 
       }
     });
-    console.log(spliceMenu);
+    // console.log(spliceMenu);
     let cleanMenuSection = {};
     for (let lvl in spliceMenu) {
       // console.log(lvl);
@@ -203,26 +203,52 @@ export default class Menu {
         </div>
       </article>`;
     }
+    let param = {
+      "key": "test_data",
+      "data": {
+        "markup": controller.menu.markup
+      }
+    };
+    const url = 'https://apis.detroitmi.gov/data_cache/user_cache/data/';
+      // Create our request constructor with all the parameters we need
+      var request = new Request(url, {
+          method: 'POST',
+          body: JSON.stringify(param),
+          headers: new Headers({
+            'Content-type': 'application/json'
+          }),
+          mode: 'cors',
+          cache: 'default'
+      });
+
+      fetch(request)
+      .then((resp) => {
+        console.log(resp);
+        console.log(resp.status);
+        if(resp.status === 201){
+           console.log('item submitted');
+         }
+    });
     controller.menu.render(controller.menu.markup, controller);
   }
   navLevelChange(ev) {
-    console.log(ev);
+    // console.log(ev);
     let pastClass = ev.target.nextElementSibling.className.split(' ');
-    console.log(pastClass);
+    // console.log(pastClass);
     let tempClass = '';
     let newClass = 'active ' + ev.target.nextElementSibling.className;
     ev.target.nextElementSibling.className = newClass;
   }
   searchBar(ev) {
-    console.log(ev);
-    console.log(ev.target.value);
-    console.log(JSON.stringify(ev.target.value));
+    // console.log(ev);
+    // console.log(ev.target.value);
+    // console.log(JSON.stringify(ev.target.value));
     let str = ev.target.value.replace(/\s/g, "+");
-    console.log(str);
+    // console.log(str);
     window.location.href = `http://detroitmi.theneighborhoods.org/search?search=${str}`;
   }
   navBackLevel(ev) {
-    console.log(ev);
+    // console.log(ev);
     let parentClass = ev.target.parentNode.className.split(' ');
     let newClass = '';
     let counter = 0;
@@ -233,11 +259,11 @@ export default class Menu {
         (counter < (parentClass.length - 2)) ? newClass += ' ': 0;
       }
     });
-    console.log(newClass);
+    // console.log(newClass);
     ev.target.parentNode.className = newClass;
   }
   render(markup, controller) {
-    console.log(markup);
+    // console.log(markup);
     document.querySelector('.big-nav').innerHTML = markup;
     let navItems = Array.from(document.querySelectorAll('.sub-items-btn'));
     navItems.forEach(function(item) {
