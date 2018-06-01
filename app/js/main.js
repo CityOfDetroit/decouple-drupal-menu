@@ -24,4 +24,5 @@ import Controller from './controller.class.js';
   document.getElementById('big-menu').addEventListener('change', function(e){
     menuToggle(e);
   });
+  document.getElementById('big-menu').checked = false;
 })(window);
