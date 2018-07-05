@@ -21,10 +21,10 @@ export default class Controller {
     fetch(url,{mode: 'cors'})
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) {
-      console.log(data.updated);
-      console.log(controller.today);
+      // console.log(data.updated);
+      // console.log(controller.today);
       controller.cache = data.data.markup;
-      if(moment(data.updated).isBefore(moment(controller.today))){
+      if(!moment(data.updated).isBefore(moment(controller.today))){
         console.log('time to update');
         controller.getTaxomy(controller);
       }else{
@@ -62,9 +62,9 @@ export default class Controller {
         // console.log(values); //one, two
         controller.menu.buildMenu(values, controller);
     }).catch(reason => {
-      console.log(reason);
       // console.log(controller);
-      console.log('loading from cache');
+      console.log('Error: loading from cache');
+      console.log(reason);
       controller.menu.render(controller.cache, controller);
     });
   }

@@ -59,7 +59,11 @@ export default class Menu {
               // console.log(item);
               // console.log(tempIndex1);
               // console.log(tempIndexLast);
-              cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+              if(item.data.field_organization_head_name){
+                cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, person: item.data.field_organization_head_name,children: {}};
+              }else{
+                cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+              }
             });
             break;
           case 'lvl3':
@@ -97,6 +101,42 @@ export default class Menu {
     }
     return cleanMenuSection;
   }
+  checkAlias(item){
+    let tempResult = '';
+    switch (item.name) {
+      case 'City Council At Large':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  At Large':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  District 1':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  District 2':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  District 3':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  District 4':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  District 5':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  District 6':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      case 'City Council  District 7':
+        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+        break;
+      default:
+        tempResult = `<a href="${item.link}"><span>${item.name}</span></a>`;
+        break;
+    }
+    return tempResult;
+  }
   buildMenu(data, controller) {
     let protocol = window.location.protocol;
     let baseURL = window.location.host;
@@ -104,7 +144,7 @@ export default class Menu {
     if (data.length) {
       controller.menu.markup += `<article class="nav-container lvl-1">`;
       data.forEach(function(taxSet) {
-        console.log(taxSet);
+        // console.log(taxSet);
         controller.menu.markup +=
         `<div class="nav-item lvl-1">
         ${taxSet.name == 'DEPARTMENTS' ? `<a href="${protocol}//${baseURL}/${taxSet.name.toLowerCase()}"><span>${taxSet.name}</span></a>` : ''}
@@ -131,7 +171,8 @@ export default class Menu {
                   if (multiMenu[link].children.hasOwnProperty(linkChild)) {
                     controller.menu.markup +=
                     `<div class="nav-item lvl-3">
-                      <a href="${multiMenu[link].children[linkChild].link}"><span>${multiMenu[link].children[linkChild].name}</span></a>`;
+                      ${controller.menu.checkAlias(multiMenu[link].children[linkChild])}
+                      `;
                       if(Object.keys(multiMenu[link].children[linkChild].children).length !== 0 && multiMenu[link].children[linkChild].children.constructor === Object){
                         controller.menu.markup += `<div class="sub-items-btn"></div>
                         <article class="nav-container lvl-4">
@@ -196,6 +237,12 @@ export default class Menu {
         <a href="${protocol}//${baseURL}/water"><span>WATER</span></a>
        </div>
        <div class="nav-item lvl-1">
+        <a href="${protocol}//${baseURL}/events"><span>EVENTS</span></a>
+       </div>
+       <div class="nav-item lvl-1">
+        <a href="${protocol}//${baseURL}/news"><span>NEWS</span></a>
+       </div>
+       <div class="nav-item lvl-1">
         <a href="${protocol}//${baseURL}/documents"><span>DOCUMENTS</span></a>
        </div>
        <div class="nav-item lvl-1">
@@ -220,15 +267,20 @@ export default class Menu {
           mode: 'cors',
           cache: 'default'
       });
-
-      fetch(request)
-      .then((resp) => {
-        console.log(resp);
-        console.log(resp.status);
-        if(resp.status === 201){
-           console.log('item submitted');
-         }
-    });
+      // white listing site menu that gets cached
+      if(baseURL == 'detroitmi.theneighborhoods.org'){
+        fetch(request)
+        .then((resp) => {
+          // console.log(resp);
+          // console.log(resp.status);
+          if(resp.status === 201){
+              // console.log('item submitted');
+            }
+        });
+      }else{
+        console.log('testing env');
+        
+      }
     controller.menu.render(controller.menu.markup, controller);
   }
   navLevelChange(ev) {
