@@ -17,14 +17,34 @@ export default class Controller {
   init(controller){
     // console.log(controller.today);
     // controller.getTaxomy(controller);
-    let url = "https://apis.detroitmi.gov/data_cache/user_cache/user_cache_test_data/";
+    let baseURL = window.location.host;
+    let url;
+
+    switch (baseURL) {
+      case 'detroitmi.theneighborhoods.org':
+        url = "https://apis.detroitmi.gov/data_cache/user_cache/user_cache_detroitmi_menu_dev/";
+        break;
+
+      case 'stagedetroitmi.theneighborhoods.org':
+        url = "https://apis.detroitmi.gov/data_cache/user_cache/user_cache_detroitmi_menu_stage/";
+        break;
+
+      case 'detroitmi.prod.acquia-sites.com':
+        url = "https://apis.detroitmi.gov/data_cache/user_cache/user_cache_detroitmi_menu_prod/";
+        break;
+    
+      default:
+        console.log('testing env');
+        break;
+    }
+
     fetch(url,{mode: 'cors'})
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) {
-      // console.log(data.updated);
+      console.log(data.updated);
       // console.log(controller.today);
       controller.cache = data.data.markup;
-      if(!moment(data.updated).isBefore(moment(controller.today))){
+      if(moment(data.updated).isBefore(moment(controller.today))){
         console.log('time to update');
         controller.getTaxomy(controller);
       }else{
@@ -34,8 +54,9 @@ export default class Controller {
     });
   }
   getTaxomy(controller){
+    let baseURL = window.location.host;
     let departments = new Promise((resolve, reject) => {
-      let url = "http://detroitmi.theneighborhoods.org/rest/menu/department-full?_format=hal_json";
+      let url = `http://${baseURL}/rest/menu/department-full?_format=hal_json`;
       return fetch(url,{mode: 'cors'})
       .then((resp) => resp.json()) // Transform the data into json
       .then(function(data) {
@@ -43,7 +64,7 @@ export default class Controller {
       });
     });
     let government = new Promise((resolve, reject) => {
-      let url = "http://detroitmi.theneighborhoods.org/rest/menu/government?_format=hal_json";
+      let url = `http://${baseURL}/rest/menu/government?_format=hal_json`;
       return fetch(url)
       .then((resp) => resp.json()) // Transform the data into json
       .then(function(data) {
@@ -51,7 +72,7 @@ export default class Controller {
       });
     });
     let howDoI = new Promise((resolve, reject) => {
-      let url = "http://detroitmi.theneighborhoods.org/rest/menu/interactions?_format=hal_json";
+      let url = `http://${baseURL}/rest/menu/interactions?_format=hal_json`;
       return fetch(url)
       .then((resp) => resp.json()) // Transform the data into json
       .then(function(data) {

@@ -248,39 +248,69 @@ export default class Menu {
        <div class="nav-item lvl-1">
          <a href="${protocol}//${baseURL}/forms"><span>FORMS</span></a>
         </div>
+        <div class="nav-item lvl-1">
+         <a href="${protocol}//${baseURL}/city-hotlines"><span>HOTLINES</span></a>
+        </div>
       </article>`;
     }
-    let param = {
-      "key": "test_data",
-      "data": {
-        "markup": controller.menu.markup
-      }
-    };
+    let param;
+    
     const url = 'https://apis.detroitmi.gov/data_cache/user_cache/data/';
-      // Create our request constructor with all the parameters we need
-      var request = new Request(url, {
-          method: 'POST',
-          body: JSON.stringify(param),
-          headers: new Headers({
-            'Content-type': 'application/json'
-          }),
-          mode: 'cors',
-          cache: 'default'
-      });
-      // white listing site menu that gets cached
-      if(baseURL == 'detroitmi.theneighborhoods.org'){
-        fetch(request)
-        .then((resp) => {
-          // console.log(resp);
-          // console.log(resp.status);
-          if(resp.status === 201){
-              // console.log('item submitted');
-            }
-        });
-      }else{
-        console.log('testing env');
+    // white listing site menu that gets cached
+    switch (baseURL) {
+      case 'detroitmi.theneighborhoods.org':
+        // Updating DEV menu cache
+        param = {
+          "key": "user_cache_detroitmi_menu_dev",
+          "data": {
+            "markup": controller.menu.markup
+          }
+        };
+        break;
+
+      case 'stagedetroitmi.theneighborhoods.org':
+        // Updating STAGE menu cache
+        param = {
+          "key": "user_cache_detroitmi_menu_stage",
+          "data": {
+            "markup": controller.menu.markup
+          }
+        };
+        break;
+
+      case 'detroitmi.prod.acquia-sites.com':
+        // Updating PROD menu cache
+        param = {
+          "key": "user_cache_detroitmi_menu_dev",
+          "data": {
+            "markup": controller.menu.markup
+          }
+        };
         
-      }
+        break;
+    
+      default:
+        console.log('testing env');
+        break;
+    }
+    // Create our request constructor with all the parameters we need
+    let request = new Request(url, {
+      method: 'POST',
+      body: JSON.stringify(param),
+      headers: new Headers({
+        'Content-type': 'application/json'
+      }),
+      mode: 'cors',
+      cache: 'default'
+    });
+    fetch(request)
+    .then((resp) => {
+      // console.log(resp);
+      // console.log(resp.status);
+      if(resp.status === 201){
+          // console.log('item submitted');
+        }
+    });
     controller.menu.render(controller.menu.markup, controller);
   }
   navLevelChange(ev) {
