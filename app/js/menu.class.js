@@ -293,6 +293,7 @@ export default class Menu {
         console.log('testing env');
         break;
     }
+    console.log(param);
     // Create our request constructor with all the parameters we need
     let request = new Request(url, {
       method: 'POST',
@@ -303,14 +304,17 @@ export default class Menu {
       mode: 'cors',
       cache: 'default'
     });
-    fetch(request)
-    .then((resp) => {
-      // console.log(resp);
-      // console.log(resp.status);
-      if(resp.status === 201){
-          // console.log('item submitted');
-        }
-    });
+    if(param !== undefined){
+      fetch(request)
+      .then((resp) => {
+        // console.log(resp);
+        // console.log(resp.status);
+        if(resp.status === 201){
+            // console.log('item submitted');
+          }
+      });
+    }
+    
     controller.menu.render(controller.menu.markup, controller);
   }
   navLevelChange(ev) {

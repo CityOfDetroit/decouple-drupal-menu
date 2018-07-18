@@ -35,6 +35,8 @@ export default class Controller {
     
       default:
         console.log('testing env');
+        url = "https://apis.detroitmi.gov/data_cache/user_cache/user_cache_detroitmi_menu_dev/";
+        baseURL = 'detroitmi.theneighborhoods.org';
         break;
     }
 
@@ -44,17 +46,21 @@ export default class Controller {
       console.log(data.updated);
       // console.log(controller.today);
       controller.cache = data.data.markup;
-      if(moment(data.updated).isBefore(moment(controller.today))){
-        console.log('time to update');
-        controller.getTaxomy(controller);
-      }else{
-        console.log('load cache');
-        controller.menu.render(data.data.markup, controller);
-      }
+      console.log('load cache');
+      controller.menu.render(data.data.markup, controller);
+      console.log('time to update');
+      controller.getTaxomy(baseURL, controller);
+      // if(moment(data.updated).isBefore(moment(controller.today))){
+      //   console.log('time to update');
+      //   controller.getTaxomy(controller);
+      // }else{
+      //   console.log('load cache');
+      //   controller.menu.render(data.data.markup, controller);
+      // }
     });
   }
-  getTaxomy(controller){
-    let baseURL = window.location.host;
+  getTaxomy(baseURL, controller){
+    console.log(baseURL);
     let departments = new Promise((resolve, reject) => {
       let url = `http://${baseURL}/rest/menu/department-full?_format=hal_json`;
       return fetch(url,{mode: 'cors'})
