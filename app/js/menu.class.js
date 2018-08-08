@@ -270,7 +270,7 @@ export default class Menu {
       case 'detroitmi.theneighborhoods.org':
         // Updating DEV menu cache
         param = {
-          "key": "user_cache_detroitmi_menu_dev",
+          "key": "detroitmi_menu_dev",
           "data": {
             "markup": controller.menu.markup
           }
@@ -280,7 +280,7 @@ export default class Menu {
       case 'stagedetroitmi.theneighborhoods.org':
         // Updating STAGE menu cache
         param = {
-          "key": "user_cache_detroitmi_menu_stage",
+          "key": "detroitmi_menu_stage",
           "data": {
             "markup": controller.menu.markup
           }
@@ -290,7 +290,7 @@ export default class Menu {
       case 'detroitmi.prod.acquia-sites.com':
         // Updating PROD menu cache
         param = {
-          "key": "user_cache_detroitmi_menu_dev",
+          "key": "detroitmi_menu_prod",
           "data": {
             "markup": controller.menu.markup
           }
@@ -302,6 +302,7 @@ export default class Menu {
         console.log('testing env');
         break;
     }
+    console.log(url);
     console.log(param);
     console.log(error);
     // Create our request constructor with all the parameters we need
@@ -315,9 +316,10 @@ export default class Menu {
       cache: 'default'
     });
     if(param !== undefined && !error){
+      console.log('posting updates');
       fetch(request)
       .then((resp) => {
-        // console.log(resp);
+        console.log(resp);
         // console.log(resp.status);
         if(resp.status === 201){
             // console.log('item submitted');

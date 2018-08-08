@@ -40,9 +40,11 @@ export default class Controller {
         break;
     }
 
+    console.log(url);
     fetch(url,{mode: 'cors'})
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) {
+      console.log(data);
       console.log(data.updated);
       // console.log(controller.today);
       controller.cache = data.data.markup;
@@ -86,7 +88,7 @@ export default class Controller {
       });
     });
     Promise.all([departments, government, howDoI]).then(values => {
-        // console.log(values); //one, two
+        console.log(values); //one, two
         controller.menu.buildMenu(values, controller);
     }).catch(reason => {
       // console.log(controller);
