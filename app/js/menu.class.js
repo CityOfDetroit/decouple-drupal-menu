@@ -39,67 +39,72 @@ export default class Menu {
     });
     // console.log(spliceMenu);
     let cleanMenuSection = {};
-    for (let lvl in spliceMenu) {
-      // console.log(lvl);
-      // console.log(spliceMenu[lvl]);
-      if (spliceMenu.hasOwnProperty(lvl) && spliceMenu[lvl].length) {
-        switch (lvl) {
-          case 'lvl1':
-            spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data.url_alias.split('/');
-              let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              cleanMenuSection[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
-            });
-            break;
-          case 'lvl2':
-            spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data.url_alias.split('/');
-              let tempIndex1 = tempIndex[tempIndex.length - 2];
-              let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              // console.log(item);
-              // console.log(tempIndex1);
-              // console.log(tempIndexLast);
-              if(item.data.field_organization_head_name){
-                cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, person: item.data.field_organization_head_name,children: {}};
-              }else{
-                cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
-              }
-            });
-            break;
-          case 'lvl3':
-            spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data.url_alias.split('/');
-              let tempIndex1 = tempIndex[tempIndex.length - 3];
-              let tempIndex2 = tempIndex[tempIndex.length - 2];
-              let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              // console.log(item);
-              // console.log(tempIndex1);
-              // console.log(tempIndex2);
-              // console.log(tempIndexLast);
-              cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
-            });
-            break;
-          case 'lvl4':
-            spliceMenu[lvl].forEach(function(item){
-              let tempIndex = item.data.url_alias.split('/');
-              let tempIndex1 = tempIndex[tempIndex.length - 4];
-              let tempIndex2 = tempIndex[tempIndex.length - 3];
-              let tempIndex3 = tempIndex[tempIndex.length - 2];
-              let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-              // console.log(item);
-              // console.log(tempIndex1);
-              // console.log(tempIndex2);
-              // console.log(tempIndex3);
-              // console.log(tempIndexLast);
-              cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
-            });
-            break;
-          default:
-
+    try {
+      for (let lvl in spliceMenu) {
+        // console.log(lvl);
+        // console.log(spliceMenu[lvl]);
+        if (spliceMenu.hasOwnProperty(lvl) && spliceMenu[lvl].length) {
+          switch (lvl) {
+            case 'lvl1':
+              spliceMenu[lvl].forEach(function(item){
+                let tempIndex = item.data.url_alias.split('/');
+                let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
+                cleanMenuSection[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+              });
+              break;
+            case 'lvl2':
+              spliceMenu[lvl].forEach(function(item){
+                let tempIndex = item.data.url_alias.split('/');
+                let tempIndex1 = tempIndex[tempIndex.length - 2];
+                let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
+                // console.log(item);
+                // console.log(tempIndex1);
+                // console.log(tempIndexLast);
+                if(item.data.field_organization_head_name){
+                  cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, person: item.data.field_organization_head_name,children: {}};
+                }else{
+                  cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+                }
+              });
+              break;
+            case 'lvl3':
+              spliceMenu[lvl].forEach(function(item){
+                let tempIndex = item.data.url_alias.split('/');
+                let tempIndex1 = tempIndex[tempIndex.length - 3];
+                let tempIndex2 = tempIndex[tempIndex.length - 2];
+                let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
+                // console.log(item);
+                // console.log(tempIndex1);
+                // console.log(tempIndex2);
+                // console.log(tempIndexLast);
+                cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+              });
+              break;
+            case 'lvl4':
+              spliceMenu[lvl].forEach(function(item){
+                let tempIndex = item.data.url_alias.split('/');
+                let tempIndex1 = tempIndex[tempIndex.length - 4];
+                let tempIndex2 = tempIndex[tempIndex.length - 3];
+                let tempIndex3 = tempIndex[tempIndex.length - 2];
+                let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
+                // console.log(item);
+                // console.log(tempIndex1);
+                // console.log(tempIndex2);
+                // console.log(tempIndex3);
+                // console.log(tempIndexLast);
+                cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+              });
+              break;
+            default:
+  
+          }
         }
       }
+      return cleanMenuSection;
+    } catch (error) {
+      console.log(error);
+      return 0;
     }
-    return cleanMenuSection;
   }
   checkAlias(item){
     let tempResult = '';
@@ -140,6 +145,7 @@ export default class Menu {
   buildMenu(data, controller) {
     let protocol = window.location.protocol;
     let baseURL = window.location.host;
+    let error = false;
     data = Array.from(data);
     if (data.length) {
       controller.menu.markup += `<article class="nav-container lvl-1">`;
@@ -156,6 +162,9 @@ export default class Menu {
             <i class="fas fa-angle-left"></i> BACK
           </div>`;
         let multiMenu = controller.menu.buildMenuLvls(taxSet, controller);
+        if(multiMenu === 0){
+          error =  true;
+        }
         for (var link in multiMenu) {
           if (multiMenu.hasOwnProperty(link)) {
             controller.menu.markup +=
@@ -294,6 +303,7 @@ export default class Menu {
         break;
     }
     console.log(param);
+    console.log(error);
     // Create our request constructor with all the parameters we need
     let request = new Request(url, {
       method: 'POST',
@@ -304,7 +314,7 @@ export default class Menu {
       mode: 'cors',
       cache: 'default'
     });
-    if(param !== undefined){
+    if(param !== undefined && !error){
       fetch(request)
       .then((resp) => {
         // console.log(resp);
@@ -315,7 +325,7 @@ export default class Menu {
       });
     }
     
-    controller.menu.render(controller.menu.markup, controller);
+    // controller.menu.render(controller.menu.markup, controller);
   }
   navLevelChange(ev) {
     // console.log(ev);
