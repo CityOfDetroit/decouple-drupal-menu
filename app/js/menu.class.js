@@ -49,6 +49,7 @@ export default class Menu {
               spliceMenu[lvl].forEach(function(item){
                 let tempIndex = item.data.url_alias.split('/');
                 let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
+                if(controller.language == item.data.langcode)
                 cleanMenuSection[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
               });
               break;
@@ -61,8 +62,10 @@ export default class Menu {
                 // console.log(tempIndex1);
                 // console.log(tempIndexLast);
                 if(item.data.field_organization_head_name){
+                  if(controller.language == item.data.langcode)
                   cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, person: item.data.field_organization_head_name,children: {}};
                 }else{
+                  if(controller.language == item.data.langcode)
                   cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
                 }
               });
@@ -77,6 +80,7 @@ export default class Menu {
                 // console.log(tempIndex1);
                 // console.log(tempIndex2);
                 // console.log(tempIndexLast);
+                if(controller.language == item.data.langcode)
                 cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
               });
               break;
@@ -92,6 +96,7 @@ export default class Menu {
                 // console.log(tempIndex2);
                 // console.log(tempIndex3);
                 // console.log(tempIndexLast);
+                if(controller.language == item.data.langcode)
                 cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
               });
               break;
@@ -143,6 +148,7 @@ export default class Menu {
     return tempResult;
   }
   buildMenu(data, controller) {
+    console.log(data);
     let protocol = window.location.protocol;
     let baseURL = window.location.host;
     let error = false;
@@ -302,6 +308,7 @@ export default class Menu {
         console.log('testing env');
         break;
     }
+    console.log(controller.menu.markup);
     console.log(url);
     console.log(param);
     console.log(error);
@@ -327,7 +334,7 @@ export default class Menu {
       });
     }
     
-    // controller.menu.render(controller.menu.markup, controller);
+    controller.menu.render(controller.menu.markup, controller);
   }
   navLevelChange(ev) {
     // console.log(ev);
