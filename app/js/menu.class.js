@@ -1,10 +1,7 @@
 'use strict';
 export default class Menu {
   constructor() {
-    this.markup = `<div class="search-box">
-      <span></span>
-      <input id="menu-search" type="text" name="" value="" placeholder="SEARCH">
-    </div>`;
+    this.markup;
   }
   buildMenuLvls(list, controller) {
     let spliceMenu = {
@@ -49,8 +46,12 @@ export default class Menu {
               spliceMenu[lvl].forEach(function(item){
                 let tempIndex = item.data.url_alias.split('/');
                 let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-                if(controller.language == item.data.langcode)
-                cleanMenuSection[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+                if(controller.language == item.data.langcode){
+                  // console.log(item);
+                  // console.log(tempIndex);
+                  // console.log(tempIndexLast);
+                  cleanMenuSection[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, id: item.data.tid, children: {}};
+                }
               });
               break;
             case 'lvl2':
@@ -58,15 +59,20 @@ export default class Menu {
                 let tempIndex = item.data.url_alias.split('/');
                 let tempIndex1 = tempIndex[tempIndex.length - 2];
                 let tempIndexLast = tempIndex[tempIndex.length - 1].split('?')[0];
-                // console.log(item);
-                // console.log(tempIndex1);
-                // console.log(tempIndexLast);
                 if(item.data.field_organization_head_name){
-                  if(controller.language == item.data.langcode)
-                  cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, person: item.data.field_organization_head_name,children: {}};
+                  if(controller.language == item.data.langcode){
+                    // console.log(item);
+                    // console.log(tempIndex1);
+                    // console.log(tempIndexLast);
+                    cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, id: item.data.tid, person: item.data.field_organization_head_name,children: {}};
+                  }
                 }else{
-                  if(controller.language == item.data.langcode)
-                  cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+                  if(controller.language == item.data.langcode){
+                    // console.log(item);
+                    // console.log(tempIndex1);
+                    // console.log(tempIndexLast);
+                    cleanMenuSection[tempIndex1].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, id: item.data.tid, children: {}};
+                  }
                 }
               });
               break;
@@ -80,8 +86,9 @@ export default class Menu {
                 // console.log(tempIndex1);
                 // console.log(tempIndex2);
                 // console.log(tempIndexLast);
-                if(controller.language == item.data.langcode)
-                cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+                if(controller.language == item.data.langcode){
+                  cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, id: item.data.tid, children: {}};
+                }
               });
               break;
             case 'lvl4':
@@ -96,8 +103,9 @@ export default class Menu {
                 // console.log(tempIndex2);
                 // console.log(tempIndex3);
                 // console.log(tempIndexLast);
-                if(controller.language == item.data.langcode)
-                cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, children: {}};
+                if(controller.language == item.data.langcode){
+                  cleanMenuSection[tempIndex1].children[tempIndex2].children[tempIndex3].children[tempIndexLast] = {link: item.data.url_alias.split('?')[0], name: item.data.name, id: item.data.tid, children: {}};
+                }
               });
               break;
             default:
@@ -107,51 +115,74 @@ export default class Menu {
       }
       return cleanMenuSection;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return 0;
     }
   }
-  checkAlias(item){
+  checkAlias(item, lang){
+    // console.log(item);
     let tempResult = '';
-    switch (item.name) {
-      case 'City Council At Large':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+    switch (item.id) {
+      case '1501':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  At Large':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1496':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  District 1':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1276':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  District 2':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1476':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  District 3':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1481':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  District 4':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1486':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  District 5':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1346':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  District 6':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1491':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
-      case 'City Council  District 7':
-        tempResult = `<a href="${item.link}"><span>${item.name} - ${item.person}</span></a>`;
+      case '1511':
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       default:
-        tempResult = `<a href="${item.link}"><span>${item.name}</span></a>`;
+        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name}</span></a>`;
         break;
     }
     return tempResult;
   }
   buildMenu(data, controller) {
-    console.log(data);
+    // console.log(data);
+    controller.menu.markup = `<div class="search-box">
+      <span></span>
+      <input id="menu-search" type="text" name="" value="" ${controller.language == 'Arabic' ? `placeholder="بحث"`:``}${controller.language == 'Bengali' ? `placeholder="অনুসন্ধান"`:``}${controller.language == 'Spanish' ? `placeholder="BUSCAR"`:``}${controller.language == 'English' ? `placeholder="SEARCH"`:``}>
+    </div>`;
     let protocol = window.location.protocol;
     let baseURL = window.location.host;
     let error = false;
+    let transWords = [];
+    switch(controller.language){
+      case 'Arabic':
+        transWords.push('DEPARTMENTS','الحكومي','كيف أفعل','الى الخلف','حافلة','وظائف','سد دينه','ماء','أحداث','خبر','وثيقة','إستمارات','الخطوط الساخنة');
+      break;
+      
+      case 'Bengali':
+        transWords.push('বিভাগের','সরকার','আমি কিভাবে করবো','ফিরে','যাত্রীবাহী বড় মটরগাড়ী','চাকরি','শোধা','জল','ঘটনাগুলি','সংবাদ','ডকুমেন্টস','ফরম','হটলাইন');
+      break;
+       
+      case 'Spanish':
+        transWords.push('DEPARTAMENTOS','GOBIERNO','CÓMO PUEDO','ATRÁS','AUTOBÚS','TRABAJOS','PAGAR','AGUA','EVENTOS','NOTICIAS','DOCUMENTOS','FORMAS','COMUNICACIONES DIRECTAS');
+      break;
+
+      default:
+        transWords.push('DEPARTMENTS','GOVERNMENT','HOW DO I','BACK','BUSES','JOBS','PAY','WATER','EVENTS','NEWS','DOCUMENTS','FORMS','HOTLINES');
+      break;
+    }
     data = Array.from(data);
     if (data.length) {
       controller.menu.markup += `<article class="nav-container lvl-1">`;
@@ -159,13 +190,13 @@ export default class Menu {
         // console.log(taxSet);
         controller.menu.markup +=
         `<div class="nav-item lvl-1">
-        ${taxSet.name == 'DEPARTMENTS' ? `<a href="${protocol}//${baseURL}/${taxSet.name.toLowerCase()}"><span>${taxSet.name}</span></a>` : ''}
-        ${taxSet.name == 'GOVERNMENT' ? `<a href="${protocol}//${baseURL}/${taxSet.name.toLowerCase()}"><span>${taxSet.name}</span></a>` : ''}
-        ${taxSet.name == 'HOW DO I' ? `<a href="${protocol}//${baseURL}/how-do-i"><span>${taxSet.name}</span></a>` : ''}
+        ${taxSet.name == 'DEPARTMENTS' ? `<a href="/${taxSet.name.toLowerCase()}"><span>${transWords[0]}</span></a>` : ''}
+        ${taxSet.name == 'GOVERNMENT' ? `<a href="/${taxSet.name.toLowerCase()}"><span>${transWords[1]}</span></a>` : ''}
+        ${taxSet.name == 'HOW DO I' ? `<a href="/how-do-i"><span>${transWords[2]}</span></a>` : ''}
         <div class="sub-items-btn"></div>
         <article class="nav-container lvl-2">
           <div class="nav-item back lvl-2">
-            <i class="fas fa-angle-left"></i> BACK
+            <i class="fas fa-angle-left"></i> ${transWords[3]}
           </div>`;
         let multiMenu = controller.menu.buildMenuLvls(taxSet, controller);
         if(multiMenu === 0){
@@ -175,46 +206,46 @@ export default class Menu {
           if (multiMenu.hasOwnProperty(link)) {
             controller.menu.markup +=
             `<div class="nav-item lvl-2">
-              <a href="${multiMenu[link].link}"><span>${multiMenu[link].name}</span></a>`;
+              <a href="/${controller.languageCode}/taxonomy/term/${multiMenu[link].id}"><span>${multiMenu[link].name}</span></a>`;
               if(Object.keys(multiMenu[link].children).length !== 0 && multiMenu[link].children.constructor === Object){
                 controller.menu.markup += `<div class="sub-items-btn"></div>
                 <article class="nav-container lvl-3">
                   <div class="nav-item back lvl-3">
-                    <i class="fas fa-angle-left"></i> BACK
+                    <i class="fas fa-angle-left"></i> ${transWords[3]}
                   </div>`;
                 for (var linkChild in multiMenu[link].children) {
                   if (multiMenu[link].children.hasOwnProperty(linkChild)) {
                     controller.menu.markup +=
                     `<div class="nav-item lvl-3">
-                      ${controller.menu.checkAlias(multiMenu[link].children[linkChild])}
+                      ${controller.menu.checkAlias(multiMenu[link].children[linkChild], controller.languageCode)}
                       `;
                       if(Object.keys(multiMenu[link].children[linkChild].children).length !== 0 && multiMenu[link].children[linkChild].children.constructor === Object){
                         controller.menu.markup += `<div class="sub-items-btn"></div>
                         <article class="nav-container lvl-4">
                           <div class="nav-item back lvl-4">
-                            <i class="fas fa-angle-left"></i> BACK
+                            <i class="fas fa-angle-left"></i> ${transWords[3]}
                           </div>`;
                         for (var linkgrandChild in multiMenu[link].children[linkChild].children) {
                           if (multiMenu[link].children[linkChild].children.hasOwnProperty(linkgrandChild)) {
                             controller.menu.markup +=
                             `<div class="nav-item lvl-4">
-                              <a href="${multiMenu[link].children[linkChild].children[linkgrandChild].link}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].name}</span></a>`;
+                              <a href="/${controller.languageCode}/taxonomy/term/${multiMenu[link].children[linkChild].children[linkgrandChild].id}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].name}</span></a>`;
                               if(Object.keys(multiMenu[link].children[linkChild].children[linkgrandChild].children).length !== 0 && multiMenu[link].children[linkChild].children[linkgrandChild].children.constructor === Object){
                                 controller.menu.markup += `<div class="sub-items-btn"></div>
                                 <article class="nav-container lvl-5">
                                   <div class="nav-item back lvl-5">
-                                    <i class="fas fa-angle-left"></i> BACK
+                                    <i class="fas fa-angle-left"></i> ${transWords[3]}
                                   </div>`;
                                 for (var linkgreatGrandChild in multiMenu[link].children[linkChild].children[linkgrandChild].children) {
                                   if (multiMenu[link].children[linkChild].children[linkgrandChild].children.hasOwnProperty(linkgreatGrandChild)) {
                                     controller.menu.markup +=
                                     `<div class="nav-item lvl-5">
-                                      <a href="${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].link}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].name}</span></a>`;
+                                      <a href="/${controller.languageCode}/taxonomy/term/${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].id}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].name}</span></a>`;
                                       if(Object.keys(multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].children).length !== 0 && multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].children.constructor === Object){
                                         controller.menu.markup += `<div class="sub-items-btn"></div>
                                         <article class="nav-container lvl-6">
                                           <div class="nav-item back lvl-6">
-                                            <i class="fas fa-angle-left"></i> BACK
+                                            <i class="fas fa-angle-left"></i> ${transWords[3]}
                                           </div>
                                         </article>`;
                                       }
@@ -240,31 +271,31 @@ export default class Menu {
       });
       controller.menu.markup +=
       `<div class="nav-item lvl-1">
-        <a href="${protocol}//${baseURL}/buses"><span>BUSES</span></a>
+        <a href="${protocol}//${baseURL}/buses"><span>${transWords[4]}</span></a>
        </div>
        <div class="nav-item lvl-1">
-         <a href="${protocol}//${baseURL}/jobs"><span>JOBS</span></a>
+         <a href="${protocol}//${baseURL}/jobs"><span>${transWords[5]}</span></a>
        </div>
        <div class="nav-item lvl-1">
-        <a href="${protocol}//${baseURL}/pay"><span>PAY</span></a>
+        <a href="${protocol}//${baseURL}/pay"><span>${transWords[6]}</span></a>
        </div>
        <div class="nav-item lvl-1">
-        <a href="${protocol}//${baseURL}/water"><span>WATER</span></a>
+        <a href="${protocol}//${baseURL}/water"><span>${transWords[7]}</span></a>
        </div>
        <div class="nav-item lvl-1">
-        <a href="${protocol}//${baseURL}/events"><span>EVENTS</span></a>
+        <a href="${protocol}//${baseURL}/events"><span>${transWords[8]}</span></a>
        </div>
        <div class="nav-item lvl-1">
-        <a href="${protocol}//${baseURL}/news"><span>NEWS</span></a>
+        <a href="${protocol}//${baseURL}/news"><span>${transWords[9]}</span></a>
        </div>
        <div class="nav-item lvl-1">
-        <a href="${protocol}//${baseURL}/documents"><span>DOCUMENTS</span></a>
+        <a href="${protocol}//${baseURL}/documents"><span>${transWords[10]}</span></a>
        </div>
        <div class="nav-item lvl-1">
-         <a href="${protocol}//${baseURL}/forms"><span>FORMS</span></a>
+         <a href="${protocol}//${baseURL}/forms"><span>${transWords[11]}</span></a>
         </div>
         <div class="nav-item lvl-1">
-         <a href="${protocol}//${baseURL}/city-hotlines"><span>HOTLINES</span></a>
+         <a href="${protocol}//${baseURL}/city-hotlines"><span>${transWords[12]}</span></a>
         </div>
       </article>`;
     }
@@ -272,52 +303,33 @@ export default class Menu {
     
     const url = 'https://apis.detroitmi.gov/data_cache/user_cache/data/';
     // white listing site menu that gets cached
+    let prox;
+    (controller.languageCode == 'English') ? prox = '' : prox = `_${controller.languageCode}`; 
     switch (baseURL) {
-      case 'detroitmi.theneighborhoods.org':
+      case 'detroitmi.gov':
         // Updating DEV menu cache
         param = {
-          "key": "detroitmi_menu_dev",
+          "key": `detroitmi_menu_prod${prox}`,
           "data": {
             "markup": controller.menu.markup
           }
         };
-        break;
-
-      case 'stagedetroitmi.theneighborhoods.org':
-        // Updating STAGE menu cache
-        param = {
-          "key": "detroitmi_menu_stage",
-          "data": {
-            "markup": controller.menu.markup
-          }
-        };
-        break;
-
-      case 'detroitmi.prod.acquia-sites.com':
-        // Updating PROD menu cache
-        param = {
-          "key": "detroitmi_menu_prod",
-          "data": {
-            "markup": controller.menu.markup
-          }
-        };
-        
         break;
     
       default:
         console.log('testing env');
         break;
     }
-    console.log(controller.menu.markup);
-    console.log(url);
-    console.log(param);
-    console.log(error);
+    // console.log(controller.menu.markup);
+    // console.log(url);
+    // console.log(param);
+    // console.log(error);
     // Create our request constructor with all the parameters we need
     let request = new Request(url, {
       method: 'POST',
       body: JSON.stringify(param),
       headers: new Headers({
-        'Content-type': 'application/json'
+        'Content-type': 'application/json' 
       }),
       mode: 'cors',
       cache: 'default'
@@ -334,7 +346,7 @@ export default class Menu {
       });
     }
     
-    controller.menu.render(controller.menu.markup, controller);
+    // controller.menu.render(controller.menu.markup, controller);
   }
   navLevelChange(ev) {
     // console.log(ev);
@@ -350,7 +362,7 @@ export default class Menu {
     // console.log(JSON.stringify(ev.target.value));
     let str = ev.target.value.replace(/\s/g, "+");
     // console.log(str);
-    window.location.href = `http://detroitmi.theneighborhoods.org/search?search=${str}`;
+    window.location.href = `/search?search=${str}`;
   }
   navBackLevel(ev) {
     // console.log(ev);
