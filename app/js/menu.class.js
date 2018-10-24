@@ -121,37 +121,38 @@ export default class Menu {
   }
   checkAlias(item, lang){
     // console.log(item);
+    let tempLang = (lang == 'en') ? '' : `/${lang}`;
     let tempResult = '';
     switch (item.id) {
       case '1501':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1496':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1276':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1476':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1481':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1486':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1346':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1491':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       case '1511':
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name} - ${item.person}</span></a>`;
         break;
       default:
-        tempResult = `<a href="/${lang}/taxonomy/term/${item.id}"><span>${item.name}</span></a>`;
+        tempResult = `<a href="${tempLang}/taxonomy/term/${item.id}"><span>${item.name}</span></a>`;
         break;
     }
     return tempResult;
@@ -202,11 +203,12 @@ export default class Menu {
         if(multiMenu === 0){
           error =  true;
         }
+        let tempLang = (controller.languageCode === 'en') ? '' : `/${controller.languageCode}`;
         for (var link in multiMenu) {
           if (multiMenu.hasOwnProperty(link)) {
             controller.menu.markup +=
             `<div class="nav-item lvl-2">
-              <a href="/${controller.languageCode}/taxonomy/term/${multiMenu[link].id}"><span>${multiMenu[link].name}</span></a>`;
+              <a href="${tempLang}/taxonomy/term/${multiMenu[link].id}"><span>${multiMenu[link].name}</span></a>`;
               if(Object.keys(multiMenu[link].children).length !== 0 && multiMenu[link].children.constructor === Object){
                 controller.menu.markup += `<div class="sub-items-btn"></div>
                 <article class="nav-container lvl-3">
@@ -229,7 +231,7 @@ export default class Menu {
                           if (multiMenu[link].children[linkChild].children.hasOwnProperty(linkgrandChild)) {
                             controller.menu.markup +=
                             `<div class="nav-item lvl-4">
-                              <a href="/${controller.languageCode}/taxonomy/term/${multiMenu[link].children[linkChild].children[linkgrandChild].id}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].name}</span></a>`;
+                              <a href="${tempLang}/taxonomy/term/${multiMenu[link].children[linkChild].children[linkgrandChild].id}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].name}</span></a>`;
                               if(Object.keys(multiMenu[link].children[linkChild].children[linkgrandChild].children).length !== 0 && multiMenu[link].children[linkChild].children[linkgrandChild].children.constructor === Object){
                                 controller.menu.markup += `<div class="sub-items-btn"></div>
                                 <article class="nav-container lvl-5">
@@ -240,7 +242,7 @@ export default class Menu {
                                   if (multiMenu[link].children[linkChild].children[linkgrandChild].children.hasOwnProperty(linkgreatGrandChild)) {
                                     controller.menu.markup +=
                                     `<div class="nav-item lvl-5">
-                                      <a href="/${controller.languageCode}/taxonomy/term/${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].id}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].name}</span></a>`;
+                                      <a href="${tempLang}/taxonomy/term/${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].id}"><span>${multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].name}</span></a>`;
                                       if(Object.keys(multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].children).length !== 0 && multiMenu[link].children[linkChild].children[linkgrandChild].children[linkgreatGrandChild].children.constructor === Object){
                                         controller.menu.markup += `<div class="sub-items-btn"></div>
                                         <article class="nav-container lvl-6">
@@ -303,13 +305,23 @@ export default class Menu {
     
     const url = 'https://apis.detroitmi.gov/data_cache/user_cache/data/';
     // white listing site menu that gets cached
-    let prox;
-    (controller.languageCode == 'English') ? prox = '' : prox = `_${controller.languageCode}`; 
+    // let prox;
+    // (controller.languageCode == 'English') ? prox = '' : prox = `_${controller.languageCode}`; 
     switch (baseURL) {
       case 'detroitmi.gov':
         // Updating DEV menu cache
         param = {
-          "key": `detroitmi_menu_prod${prox}`,
+          "key": `detroitmi_menu_prod_${controller.languageCode}`,
+          "data": {
+            "markup": controller.menu.markup
+          }
+        };
+        break;
+
+      case 'www.detroitmi.gov':
+        // Updating DEV menu cache
+        param = {
+          "key": `detroitmi_menu_prod_${controller.languageCode}`,
           "data": {
             "markup": controller.menu.markup
           }

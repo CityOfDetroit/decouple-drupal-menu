@@ -44,7 +44,7 @@ export default class Controller {
       default:
         controller.languageCode = 'en';
         controller.language = 'English';
-        url = 'https://apis.detroitmi.gov/data_cache/user_cache/user_cache_detroitmi_menu_prod/';
+        url = 'https://apis.detroitmi.gov/data_cache/user_cache/user_cache_detroitmi_menu_prod_en/';
         break;
     }
 
@@ -67,7 +67,7 @@ export default class Controller {
   getTaxomy(baseURL, controller) {
     // console.log(baseURL);
     const departments = new Promise((resolve, reject) => {
-      const url = `http://${baseURL}/rest/menu/department-full?_format=hal_json`;
+      const url = `https://${baseURL}/rest/menu/department-full?_format=hal_json`;
       return fetch(url, { mode: 'cors' })
         .then(resp => resp.json()) // Transform the data into json
         .then((data) => {
@@ -75,7 +75,7 @@ export default class Controller {
         });
     });
     const government = new Promise((resolve, reject) => {
-      const url = `http://${baseURL}/rest/menu/government?_format=hal_json`;
+      const url = `https://${baseURL}/rest/menu/government?_format=hal_json`;
       return fetch(url)
         .then(resp => resp.json()) // Transform the data into json
         .then((data) => {
@@ -83,7 +83,7 @@ export default class Controller {
         });
     });
     const howDoI = new Promise((resolve, reject) => {
-      const url = `http://${baseURL}/rest/menu/interactions?_format=hal_json`;
+      const url = `https://${baseURL}/rest/menu/interactions?_format=hal_json`;
       return fetch(url, { mode: 'cors' })
         .then(resp => resp.json()) // Transform the data into json
         .then((data) => {
