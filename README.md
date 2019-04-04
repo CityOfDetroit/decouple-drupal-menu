@@ -5,4 +5,4 @@ Simple decouple menu that uses drupal api to populate content.
 Clone the project. Run `npm install` inside the project folder
 
 # Develoment
-run `gulp` to load the project locally under `http://localhost:3000`
+run `parcel index.html` to load the project locally under `http://localhost:1234`
