@@ -1,5 +1,5 @@
 'use strict';
-import Controller from './controller.class.js';
+import Controller from './js/controller.class.js';
 (function(){
   let controller = new Controller();
   let menuToggle = function menuToggle(ev){

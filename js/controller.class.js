@@ -82,6 +82,14 @@ export default class Controller {
           resolve({ name: 'GOVERNMENT', data });
         });
     });
+    const census = new Promise((resolve, reject) => {
+      const url = `https://${baseURL}/rest/menu/census?_format=hal_json`;
+      return fetch(url)
+        .then(resp => resp.json()) // Transform the data into json
+        .then((data) => {
+          resolve({ name: 'CENSUS', data });
+        });
+    });
     const howDoI = new Promise((resolve, reject) => {
       const url = `https://${baseURL}/rest/menu/interactions?_format=hal_json`;
       return fetch(url, { mode: 'cors' })
@@ -90,7 +98,7 @@ export default class Controller {
           resolve({ name: 'HOW DO I', data });
         });
     });
-    Promise.all([departments, government, howDoI]).then((values) => {
+    Promise.all([departments, government, census, howDoI]).then((values) => {
       // console.log(values); //one, two
       controller.menu.buildMenu(values, controller);
     }).catch((reason) => {

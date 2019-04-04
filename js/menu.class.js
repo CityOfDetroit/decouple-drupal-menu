@@ -113,6 +113,7 @@ export default class Menu {
           }
         }
       }
+      // console.log(cleanMenuSection);
       return cleanMenuSection;
     } catch (error) {
       // console.log(error);
@@ -169,19 +170,19 @@ export default class Menu {
     let transWords = [];
     switch(controller.language){
       case 'Arabic':
-        transWords.push('DEPARTMENTS','الحكومي','كيف أفعل','الى الخلف','حافلة','وظائف','سد دينه','ماء','أحداث','خبر','وثيقة','إستمارات','الخطوط الساخنة');
+        transWords.push('DEPARTMENTS','الحكومي','كيف أفعل','الى الخلف','حافلة','وظائف','سد دينه','ماء','أحداث','خبر','وثيقة','إستمارات','الخطوط الساخنة','التعداد');
       break;
       
       case 'Bengali':
-        transWords.push('বিভাগের','সরকার','আমি কিভাবে করবো','ফিরে','যাত্রীবাহী বড় মটরগাড়ী','চাকরি','শোধা','জল','ঘটনাগুলি','সংবাদ','ডকুমেন্টস','ফরম','হটলাইন');
+        transWords.push('বিভাগের','সরকার','আমি কিভাবে করবো','ফিরে','যাত্রীবাহী বড় মটরগাড়ী','চাকরি','শোধা','জল','ঘটনাগুলি','সংবাদ','ডকুমেন্টস','ফরম','হটলাইন','জনগণনা');
       break;
        
       case 'Spanish':
-        transWords.push('DEPARTAMENTOS','GOBIERNO','CÓMO PUEDO','ATRÁS','AUTOBÚS','TRABAJOS','PAGAR','AGUA','EVENTOS','NOTICIAS','DOCUMENTOS','FORMAS','COMUNICACIONES DIRECTAS');
+        transWords.push('DEPARTAMENTOS','GOBIERNO','CÓMO PUEDO','ATRÁS','AUTOBÚS','TRABAJOS','PAGAR','AGUA','EVENTOS','NOTICIAS','DOCUMENTOS','FORMAS','COMUNICACIONES DIRECTAS','CENSO');
       break;
 
       default:
-        transWords.push('DEPARTMENTS','GOVERNMENT','HOW DO I','BACK','BUSES','JOBS','PAY','WATER','EVENTS','NEWS','DOCUMENTS','FORMS','HOTLINES');
+        transWords.push('DEPARTMENTS','GOVERNMENT','HOW DO I','BACK','BUSES','JOBS','PAY','WATER','EVENTS','NEWS','DOCUMENTS','FORMS','HOTLINES','CENSUS');
       break;
     }
     data = Array.from(data);
@@ -193,6 +194,7 @@ export default class Menu {
         `<div class="nav-item lvl-1">
         ${taxSet.name == 'DEPARTMENTS' ? `<a href="/${taxSet.name.toLowerCase()}"><span>${transWords[0]}</span></a>` : ''}
         ${taxSet.name == 'GOVERNMENT' ? `<a href="/${taxSet.name.toLowerCase()}"><span>${transWords[1]}</span></a>` : ''}
+        ${taxSet.name == 'CENSUS' ? `<a href="/census"><span>${transWords[13]}</span></a>` : ''}
         ${taxSet.name == 'HOW DO I' ? `<a href="/how-do-i"><span>${transWords[2]}</span></a>` : ''}
         <div class="sub-items-btn"></div>
         <article class="nav-container lvl-2">
@@ -330,6 +332,7 @@ export default class Menu {
     
       default:
         console.log('testing env');
+        // console.log(controller.menu.markup);
         break;
     }
     // console.log(controller.menu.markup);
