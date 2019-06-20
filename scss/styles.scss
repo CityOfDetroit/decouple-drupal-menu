@@ -33,18 +33,10 @@ $lg: new-breakpoint(min-width 1024px);
 }
 // ====================== mobile ============================
 .big-menu {
-	position: fixed;
-	top: 0;
-	right: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
 	width: 57px;
 	height: 57px;
 	background-color: $color-3;
   color: $color-5;
-	//box-shadow: 0 0 20px rgba(black,0.2);
 	transition: transform 250ms ease;
 	cursor: pointer;
   font-weight: bold;
@@ -71,6 +63,9 @@ $lg: new-breakpoint(min-width 1024px);
 	display: none;
 
 	&:checked ~ .big-menu {
+    position: fixed;
+    top: 9px;
+    right: 9px;
 		background-color: $color-3;
     color: $color-5;
 
@@ -118,7 +113,7 @@ $lg: new-breakpoint(min-width 1024px);
   max-width: 100%;
 	margin: 0;
 	padding: 0;
-	background-color: $color-2;
+	background-color: $color-5;
 	transition: right $base-duration ease;
 	z-index: 5;
 
@@ -135,6 +130,9 @@ $lg: new-breakpoint(min-width 1024px);
       border: none;
       border-bottom: 2px solid $white;
       background-color: transparent;
+      color: $white;
+    }
+    input::placeholder {
       color: $white;
     }
     span{
@@ -194,6 +192,16 @@ $lg: new-breakpoint(min-width 1024px);
         cursor: pointer;
       }
 
+      .sub-items-btn:hover{
+        background-color: $color-1;
+      } 
+
+      .sub-items-btn::after{
+        font: bold 20px "Font Awesome\ 5 Free";
+        content: "\f105";
+        color: $white;
+      } 
+
       .back{
         padding: 1em;
         font-weight: bold;
@@ -208,10 +216,6 @@ $lg: new-breakpoint(min-width 1024px);
           margin-right: 5px;
         }
       }
-
-      .sub-items-btn:hover{
-        background-color: $color-1;
-      } 
       .back:hover{
         background-color: $color-3;
       }
@@ -222,6 +226,85 @@ $lg: new-breakpoint(min-width 1024px);
     transition: right $base-duration ease;
     right: 0;
     background: rgba($black,0.9); 
+  }
+
+  @supports (-ms-ime-align: auto) {
+    .nav-container{
+      width: 30em;
+      max-width: 100%;
+      height: calc(100vh - 4.7em);
+      position: fixed;
+      transition: opacity $base-duration ease;
+      top: 4.7em;
+      display: none;
+      opacity: 0;
+      overflow-y: auto;
+  
+      .nav-item{
+        display: flex;
+  
+        a{
+          color: $white;
+          text-decoration: none;
+          padding: .5em;
+          flex: 1;
+          display: flex;
+  
+          span{
+            margin: auto 0;
+            padding: .5em;
+          }
+        }
+        a:hover{
+          background-color: $color-2;
+          color: $color-5;
+        }
+  
+        .sub-items-btn{
+          width: 5em;
+          text-align: center;
+          padding: 1em;
+          font-weight: bold;
+          color: $white;
+          cursor: pointer;
+        }
+  
+        .sub-items-btn:hover{
+          background-color: $color-1;
+        } 
+  
+        .sub-items-btn::after{
+          font: bold 20px "Font Awesome\ 5 Free";
+          content: "\f105";
+          color: $white;
+        } 
+  
+        .back{
+          padding: 1em;
+          font-weight: bold;
+          color: $white;
+          background-color: lighten($color-1, 5%);
+          cursor: pointer;
+  
+          i::before {
+            font: bold 20px "Font Awesome\ 5 Free";
+            content: "\f104";
+            color: $white;
+            margin-right: 5px;
+          }
+        }
+        .back:hover{
+          background-color: $color-3;
+        }
+      }
+    }
+
+    .active.nav-container{
+      transition: opacity $base-duration ease;
+      display: block;
+      opacity: 1;
+      background: rgba($black,0.9); 
+    }
   }
 }
 // ====================== mobile end ========================
