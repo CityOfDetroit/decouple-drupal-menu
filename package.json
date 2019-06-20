@@ -35,8 +35,10 @@
     "sass": "^1.17.3"
   },
   "browserslist": [
-    "> 1%",
+    "> .01%",
+    "last 2 Edge versions",
     "last 2 versions",
-    "not ie <= 8"
+    "not ie <= 8",
+    "not dead"
   ]
 }
