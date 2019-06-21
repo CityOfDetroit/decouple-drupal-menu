@@ -305,6 +305,11 @@ $lg: new-breakpoint(min-width 1024px);
       opacity: 1;
       background: rgba($black,0.9); 
     }
+
+    .active.nav-container.lvl-3, .active.nav-container.lvl-4, .active.nav-container.lvl-5{
+      position: absolute;
+      top: 0;
+    }
   }
 }
 // ====================== mobile end ========================
